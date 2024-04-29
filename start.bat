@@ -1,1 +1,1 @@
-python start.py --include BILIBILI
+python start.py --include BLOG 
