@@ -21,7 +21,7 @@ class BLog(TaskBase):
         ower=self._check_item.get('github_ower')
         repo=self._check_item.get('github_repo')
         token=self._check_item.get('github_token')
-        url=f'https://github.com/repos/{ower}/{repo}/release/latest'
+        url=f'https://api.github.com/repos/{ower}/{repo}/release/latest'
         print(f'get owner:{ower} repo:{repo} token:{token} ')
         self._session.headers.update({
             "Accept": "application/vnd.github+json",
