@@ -9,7 +9,7 @@
       "type": "debugpy",
       "request": "launch",
       "program": "start.py",
-      "args": ["--include", "BILIBILI"],
+      "args": ["--include", "Blog"],
       "console": "integratedTerminal"
     }
   ]

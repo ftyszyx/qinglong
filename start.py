@@ -1,12 +1,10 @@
 import argparse
 import json
 import os
-import time
 from datetime import datetime, timedelta
-import requests
 
-from dailycheckin.configs import checkin_map, get_checkin_info, get_notice_info
-from dailycheckin.utils.message import push_message
+from tasks.configs import task_map, get_checkin_info, get_notice_info
+from tasks.utils.message import push_message
 
 
 def parse_arguments():
@@ -37,7 +35,7 @@ def check_config(task_list):
             notice_info = get_notice_info(data=data)
             _check_info = get_checkin_info(data=data)
             check_info = {}
-            for one_check, _ in checkin_map.items():
+            for one_check, _ in task_map.items():
                 if one_check in task_list:
                     if _check_info.get(one_check.lower()):
                         for _, check_item in enumerate( _check_info.get(one_check.lower(), []) ):
@@ -62,26 +60,26 @@ def checkin():
     include = args.include
     exclude = args.exclude
     if not include:
-        include = list(checkin_map.keys())
+        include = list(task_map.keys())
     else:
-        include = [one for one in include if one in checkin_map.keys()]
+        include = [one for one in include if one in task_map.keys()]
     if not exclude:
         exclude = []
     else:
-        exclude = [one for one in exclude if one in checkin_map.keys()]
+        exclude = [one for one in exclude if one in task_map.keys()]
     task_list = list(set(include) - set(exclude))
     notice_info, check_info = check_config(task_list)
     if check_info:
         task_name_str = "\n".join(
             [
-                f"「{checkin_map.get(one.upper())[0]}」账号数 : {len(value)}"
+                f"「{task_map.get(one.upper())[0]}」账号数 : {len(value)}"
                 for one, value in check_info.items()
             ]
         )
         print(f"\n---------- 本次执行签到任务如下 ----------\n\n{task_name_str}\n\n")
         content_list = []
         for one_check, check_list in check_info.items():
-            check_name, check_func = checkin_map.get(one_check.upper())
+            check_name, check_func = task_map.get(one_check.upper())
             print(f"----------开始执行「{check_name}」签到----------")
             for index, check_item in enumerate(check_list):
                 try:

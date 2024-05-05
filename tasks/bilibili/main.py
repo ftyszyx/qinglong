@@ -1,10 +1,8 @@
 import json
 import os
 import time
-
 import requests
-
-from dailycheckin import CheckIn
+from tasks import CheckIn
 
 
 class BiliBili(CheckIn):

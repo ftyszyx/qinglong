@@ -1,19 +1,19 @@
 import json
 import os
 
-from dailycheckin import CheckIn
+from tasks import CheckIn
 
 
-def checkin_map():
+def task_map():
     result = {}
     for cls in CheckIn.__subclasses__():
-        check_name = cls.__name__.upper()
+        check_name = cls.__name__.lower()
         if check_name:
             result[check_name] = (cls.name, cls)
     return result
 
 
-checkin_map = checkin_map()
+task_map = task_map()
 
 notice_map = {
     "DINGTALK_ACCESS_TOKEN": "",
@@ -52,10 +52,10 @@ def env2str(key):
 def get_checkin_info(data):
     result = {}
     if isinstance(data, dict):
-        for one in checkin_map.keys():
+        for one in task_map.keys():
             result[one.lower()] = data.get(one, [])
     else:
-        for one in checkin_map.keys():
+        for one in task_map.keys():
             result[one.lower()] = env2list(one)
     return result
 
