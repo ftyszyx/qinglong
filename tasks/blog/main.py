@@ -1,7 +1,7 @@
 import requests
-from tasks import CheckIn
+from tasks import TaskBase
 
-class BLog(CheckIn):
+class BLog(TaskBase):
     name = '博客更新'
     def __init__(self,check_item:dict):
         self._session = requests.session()
@@ -18,13 +18,14 @@ class BLog(CheckIn):
 
 
     def main(self):
-        ower=self.check_item.get('github_ower')
-        repo=self.check_item.get('github_repo')
-        token=self.check_item.get('github_token')
+        ower=self._check_item.get('github_ower')
+        repo=self._check_item.get('github_repo')
+        token=self._check_item.get('github_token')
         url=f'https://github.com/repos/{ower}/{repo}/release/latest'
+        print(f'get owner:{ower} repo:{repo} token:{token} ')
         self._session.headers.update({
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
             "Authorization": f"Bearer {token}"})  
         response = self._session.get(url)
-        print(response.text)
+        print(f'get res:{response.text}')

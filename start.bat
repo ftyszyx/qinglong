@@ -1,1 +1,1 @@
-python start.py --include BLOG 
+python start.py --include blog 

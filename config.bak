@@ -1,9 +1,9 @@
 {
-  "DINGTALK_ACCESS_TOKEN": "",
-  "DINGTALK_SECRET": "",
+  "dingtalk_secret": "",
+  "dingtalk_access_token": "",
   "blog": {
     "github_ower": "ftyszyx",
-    "github_repos": "feishu-vitepress",
+    "github_repo": "feishu-vitepress",
     "github_token": ""
   }
 }

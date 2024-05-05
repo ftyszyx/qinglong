@@ -2,10 +2,10 @@ import json
 import os
 import time
 import requests
-from tasks import CheckIn
+from tasks import TaskBase
 
 
-class BiliBili(CheckIn):
+class BiliBili(TaskBase):
     name = "Bilibili"
 
     def __init__(self, check_item: dict):

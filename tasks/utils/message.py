@@ -32,9 +32,9 @@ def message2dingtalk(dingtalk_secret, dingtalk_access_token, content):
     )
     return
 
-def push_message(content_list: list, notice_info: dict):
-    dingtalk_secret = notice_info.get("dingtalk_secret")
-    dingtalk_access_token = notice_info.get("dingtalk_access_token")
+def push_message(content_list: list, config_dic: dict):
+    dingtalk_secret = config_dic.get("dingtalk_secret")
+    dingtalk_access_token = config_dic.get("dingtalk_access_token")
     content_str = "\n————————————\n\n".join(content_list)
     message_list = [content_str]
     for message in message_list:
