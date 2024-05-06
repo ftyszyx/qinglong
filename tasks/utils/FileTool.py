@@ -188,8 +188,9 @@ def zip_dir(dirname, zipfilename):
 # 解压缩
 
 
-def unzip_dir(zip_path, dest_path):
-    print(f'Start to unzip file {zip_path} to folder {dest_path} ...')
+def unzip_dir(zip_path, dest_path,showlog=True):
+    if showlog:
+        print(f'Start to unzip file {zip_path} to folder {dest_path} ...')
     # Check input ...
     if not os.path.exists(zip_path):
         print(zip_path + " is not exit")
@@ -204,7 +205,8 @@ def unzip_dir(zip_path, dest_path):
         for src_path in src_zip.namelist():
             dst_path = os.path.normpath(os.path.join(dest_path, src_path))
             dst_dir = os.path.dirname(dst_path)
-            print(f'Unzip file src_path:{src_path} dst_dir:{dst_dir} dst_path:{dst_path}')
+            if showlog:
+                print(f'Unzip file src_path:{src_path} dst_dir:{dst_dir} dst_path:{dst_path}')
             if not os.path.exists(dst_dir):
                 os.makedirs(dst_dir)
             if src_path.endswith("/") and not os.path.exists(dst_path):
@@ -212,4 +214,5 @@ def unzip_dir(zip_path, dest_path):
             else:
                 with open(dst_path, "wb") as fd:
                     fd.write(src_zip.read(src_path))
-        print("Unzip file succeed!")
+        if showlog:
+            print("Unzip file succeed!")

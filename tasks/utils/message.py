@@ -22,7 +22,7 @@ def message2dingtalk(dingtalk_secret, dingtalk_access_token, content):
         sign = quote_plus(base64.b64encode(hmac_code))
         url+=f'&sign={sign}'
     send_data = {"msgtype": "text", "text": {"content": content}}
-    requests.post(
+    res=requests.post(
         url="https://oapi.dingtalk.com/robot/send?access_token={}&timestamp={}&sign={}".format(
             dingtalk_access_token, timestamp, sign
         ),
@@ -30,15 +30,20 @@ def message2dingtalk(dingtalk_secret, dingtalk_access_token, content):
         data=json.dumps(send_data),
         timeout=5,
     )
+    print("Dingtalk 推送完成", res.text)
     return
 
 def push_message(content_list: list, config_dic: dict):
+    if len(content_list) == 0:
+        return
     dingtalk_secret = config_dic.get("dingtalk_secret")
     dingtalk_access_token = config_dic.get("dingtalk_access_token")
+    key_word=config_dic.get('dingtalk_keyword')
     content_str = "\n————————————\n\n".join(content_list)
+    content_str+=f'\n{key_word}'
     message_list = [content_str]
     for message in message_list:
-        if dingtalk_access_token and dingtalk_secret:
+        if dingtalk_access_token :
             try:
                 message2dingtalk(
                     dingtalk_secret=dingtalk_secret,
