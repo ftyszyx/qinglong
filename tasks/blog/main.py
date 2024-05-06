@@ -43,7 +43,7 @@ class BLog(TaskBase):
         local_file_path=os.path.join(dest_path,f'{release_name}.zip')
         if os.path.exists(local_file_path):
             print('no new blog release')
-            return 
+            return
         if os.path.exists(dest_path) is False:
             os.makedirs(dest_path)
         
