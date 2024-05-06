@@ -24,6 +24,7 @@ class BLog(TaskBase):
         ower=self._check_item.get('github_ower')
         repo=self._check_item.get('github_repo')
         token=self._check_item.get('github_token')
+        dest_path=self._check_item.get('dest_path')
         url=f'https://api.github.com/repos/{ower}/{repo}/releases/latest'
         print(f'get owner:{ower} repo:{repo} token:{token} ')
         self._session.headers.update({
@@ -36,15 +37,17 @@ class BLog(TaskBase):
         download_url=json_data.get('assets')[0].get('browser_download_url')
         download_url="https://hub.gitmirror.com/"+download_url
         release_name=json_data.get("name")
-        print(f'get release_name:{release_name} download_url:{download_url}')
-        downlaod_path=os.path.join(os.path.abspath(os.curdir),"blog_dist")
-        local_file_path=os.path.join(downlaod_path,f'{release_name}.zip')
+        if dest_path is None or dest_path.strip() =="" :
+            dest_path=os.path.join(os.path.abspath(os.curdir),"blog_dist")
+        print(f'get release_name:{release_name} download_url:{download_url} dest_path:{dest_path}')
+        local_file_path=os.path.join(dest_path,f'{release_name}.zip')
         if os.path.exists(local_file_path):
             print('no new blog release')
             return 
-        if os.path.exists(downlaod_path) is False:
-            os.makedirs(downlaod_path)
-        blog_path=os.path.join(downlaod_path,'blog')
+        if os.path.exists(dest_path) is False:
+            os.makedirs(dest_path)
+        
+        blog_path=os.path.join(dest_path,'blog')
         if os.path.exists(blog_path):
             shutil.rmtree(blog_path,ignore_errors=True)
         file_res=self._session.get(download_url)
