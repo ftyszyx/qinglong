@@ -34,12 +34,14 @@ class BLog(TaskBase):
         # print(f'get res:{response.text}')
         json_data=response.json()
         download_url=json_data.get('assets')[0].get('browser_download_url')
+        download_url="https://hub.gitmirror.com/"+download_url
         release_name=json_data.get("name")
         print(f'get release_name:{release_name} download_url:{download_url}')
         downlaod_path=os.path.join(os.path.abspath(os.curdir),"blog_dist")
         local_file_path=os.path.join(downlaod_path,f'{release_name}.zip')
         if os.path.exists(local_file_path):
-            return 'no new blog release'
+            print('no new blog release')
+            return ""
         if os.path.exists(downlaod_path) is False:
             os.makedirs(downlaod_path)
         blog_path=os.path.join(downlaod_path,'blog')
