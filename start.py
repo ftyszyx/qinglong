@@ -41,7 +41,7 @@ def run_task(task_list):
                     try:
                         msg=cls(one_task_config).main()
                         msg_list.append(msg)
-                        print(f"run {cls.name} success\n")
+                        print(f"run {cls.name} success\n return: {msg}\n")
                     except Exception :
                         print(f"run {cls.name} error: {traceback.format_exc()}\n")
             push_message(content_list=msg_list,config_dic=config_dic)
@@ -65,4 +65,7 @@ def start():
     run_task(task_list)
 
 if __name__ == "__main__":
-    start()
+    try:
+        start()
+    except Exception:
+        print(f"运行异常: {traceback.format_exc()}")

@@ -34,14 +34,19 @@ class BLog(TaskBase):
         # print(f'get res:{response.text}')
         json_data=response.json()
         download_url=json_data.get('assets')[0].get('browser_download_url')
-        print("get download_url:",download_url)
+        release_name=json_data.get("name")
+        print(f'get release_name:{release_name} download_url:{download_url}')
         downlaod_path=os.path.join(os.path.abspath(os.curdir),"blog_dist")
-        if os.path.exists(downlaod_path):
-            shutil.rmtree(downlaod_path,ignore_errors=True)
-        os.makedirs(downlaod_path)
-        file_path=os.path.join(downlaod_path,'blog.zip')
+        local_file_path=os.path.join(downlaod_path,f'{release_name}.zip')
+        if os.path.exists(local_file_path):
+            return 'no new blog release'
+        if os.path.exists(downlaod_path) is False:
+            os.makedirs(downlaod_path)
+        blog_path=os.path.join(downlaod_path,'blog')
+        if os.path.exists(blog_path):
+            shutil.rmtree(blog_path,ignore_errors=True)
         file_res=self._session.get(download_url)
-        with open(file_path,'wb') as f:
+        with open(local_file_path,'wb') as f:
             f.write(file_res.content)
-        unzip_dir(file_path,os.path.join(downlaod_path,'blog'),showlog=False)
-        return f'download blog success,save path:{file_path} url:{download_url}'
+        unzip_dir(local_file_path,blog_path,showlog=False)
+        return f'download blog success,save path:{local_file_path}\n url:{download_url}'

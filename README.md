@@ -16,7 +16,3 @@ conda deactivate
 
 运行
 python start.py --include BILIBILI
-
-# js
-
-https://github.com/6dylan6/jdpro
