@@ -33,8 +33,10 @@ def run_task(task_list):
                 return False, False
         try:
             msg_list=[]
+            print(f'config dic:{json.dumps(config_dic,indent=4)}')
             for cls in TaskBase.__subclasses__():
                 check_name = cls.__name__.lower()
+                print(f'check task {check_name}')
                 if config_dic.get(check_name) and check_name in task_list:
                     one_task_config= config_dic.get(check_name)
                     print(f'run {cls.name}')
