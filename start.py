@@ -9,11 +9,18 @@ import traceback
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
+
+    # This is the correct way to handle accepting multiple arguments.
+    # '+' == 1 or more.
+    # '*' == 0 or more.
     parser.add_argument("--include", nargs="+", help="任务执行包含的任务列表")
     parser.add_argument("--exclude", nargs="+", help="任务执行排除的任务列表")
     return parser.parse_args()
 
+allTasks = [cls.__name__.lower() for cls in TaskBase.__subclasses__()]
+
 def run_task(task_list):
+    print(f'run task list:{task_list}')
     config_path = None
     config_path_list = []
     for one_path in [ "/ql/scripts/config.json", "config.json" ]:
@@ -61,7 +68,7 @@ def run_task(task_list):
 def start():
     print(f"当前时间: {datetime.now()}\n")
     args = parse_arguments()
-    include = args.include or []
+    include = args.include or allTasks 
     exclude = args.exclude or []
     task_list = list(set(include) - set(exclude))
     run_task(task_list)
