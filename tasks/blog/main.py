@@ -39,6 +39,8 @@ class BLog(TaskBase):
         release_name=json_data.get("name")
         if dest_path is None or dest_path.strip() =="" :
             dest_path=os.path.join(os.path.abspath(os.curdir),"blog_dist")
+            if os.path.exists(dest_path) is False:
+                os.makedirs(dest_path)
         print(f'get release_name:{release_name} download_url:{download_url} dest_path:{dest_path}')
         local_file_path=os.path.join(dest_path,f'{release_name}.zip')
         if os.path.exists(local_file_path):
