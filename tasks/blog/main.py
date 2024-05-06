@@ -55,5 +55,6 @@ class BLog(TaskBase):
         file_res=self._session.get(download_url)
         with open(local_file_path,'wb') as f:
             f.write(file_res.content)
-        unzip_dir(local_file_path,blog_path,showlog=True)
+        unzip_dir(local_file_path,blog_path,showlog=False)
+        shutil.move(os.path.join(blog_path,"blog/docs/.vitepress/dist"),blog_path)
         return f'download blog success,save path:{local_file_path}\n url:{download_url}'
