@@ -1,6 +1,7 @@
 {
   "dingtalk_secret": "",
   "dingtalk_access_token": "",
+  "dingtalk_keyword": "qinglong",
   "blog": {
     "github_ower": "ftyszyx",
     "github_repo": "feishu-vitepress",
