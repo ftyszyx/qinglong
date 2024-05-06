@@ -49,7 +49,8 @@ def run_task(task_list):
                     print(f'run {cls.name}')
                     try:
                         msg=cls(one_task_config).main()
-                        msg_list.append(msg)
+                        if msg is not None:
+                            msg_list.append(msg)
                         print(f"run {cls.name} success\n return: {msg}\n")
                     except Exception :
                         print(f"run {cls.name} error: {traceback.format_exc()}\n")
