@@ -35,8 +35,8 @@ class BLog(TaskBase):
         # print(f'get res:{response.text}')
         json_data = response.json()
         download_url = json_data.get("assets")[0].get("browser_download_url")
-        # download_url = "https://mirror.ghproxy.com/" + download_url
-        download_url = "https://hub.gitmirror.com/" + download_url
+        download_url = "https://mirror.ghproxy.com/" + download_url
+        # download_url = "https://hub.gitmirror.com/" + download_url
         release_name = json_data.get("name")
         if dest_path is None or dest_path.strip() == "":
             dest_path = os.path.join(os.path.abspath(os.curdir), "blog_dist")
