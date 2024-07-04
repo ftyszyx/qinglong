@@ -49,15 +49,21 @@ class BLog(TaskBase):
         if os.path.exists(dest_path) is False:
             os.makedirs(dest_path)
 
-        file_res = self._session.get(download_url)
-        with open(local_file_path, "wb") as f:
-            f.write(file_res.content)
-        blog_tmp_path = os.path.join(dest_path, "web_tmp")
-        if os.path.exists(blog_tmp_path):
-            shutil.rmtree(blog_tmp_path, ignore_errors=True)
-        unzip_dir(local_file_path, blog_tmp_path, showlog=False)
         blog_path = os.path.join(dest_path, "web")
-        if os.path.exists(blog_path):
-            shutil.rmtree(blog_path, ignore_errors=True)
+        try:
+            file_res = self._session.get(download_url)
+            with open(local_file_path, "wb") as f:
+                f.write(file_res.content)
+            blog_tmp_path = os.path.join(dest_path, "web_tmp")
+            if os.path.exists(blog_tmp_path):
+                shutil.rmtree(blog_tmp_path, ignore_errors=True)
+            unzip_dir(local_file_path, blog_tmp_path, showlog=False)
+            if os.path.exists(blog_path):
+                shutil.rmtree(blog_path, ignore_errors=True)
+        except Exception as e:
+            print(f"download blog error:{e}")
+            if os.path.exists(local_file_path):
+                os.remove(local_file_path)
+            return f"download blog error:{e}"
         shutil.move(os.path.join(blog_tmp_path, "blog/docs/.vitepress/dist"), blog_path)
         return f"download blog success,save path:{local_file_path}\n url:{download_url}"
