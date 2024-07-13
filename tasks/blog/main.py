@@ -36,7 +36,7 @@ class BLog(TaskBase):
         json_data = response.json()
         download_url = json_data.get("assets")[0].get("browser_download_url")
         # download_url = "https://mirror.ghproxy.com/" + download_url
-        download_url = "https://gh.api.99988866.xyz" + download_url
+        download_url = "https://gh.api.99988866.xyz/" + download_url
         # download_url = "https://hub.gitmirror.com/" + download_url
         release_name = json_data.get("name")
         if dest_path is None or dest_path.strip() == "":
