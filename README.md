@@ -23,4 +23,4 @@ conda deactivate
 ## 运行
 
 
-python start.py --include BILIBILI
+python start.py --include blog 
